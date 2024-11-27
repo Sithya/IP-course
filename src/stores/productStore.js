@@ -7,7 +7,10 @@ export const useProductStore = defineStore("product", {
     promotions: [],
     categories: [],
     products: [],
+    selectedGroupName: "",
+    selectedGroupNameProduct: "",
   }),
+
   getters: {
     getCategoriesByGroup: (state) => (groupName) => {
       return state.categories.filter(
@@ -27,23 +30,72 @@ export const useProductStore = defineStore("product", {
     getPopularProducts: (state) => {
       return state.products.filter((product) => product.countSold > 10);
     },
+
+    filteredCategories: (state) => {
+      if (!state.selectedGroupName) {
+        return state.categories;
+      }
+      return state.categories.filter(
+        (category) => category.group === state.selectedGroupName
+      );
+    },
+
+    filteredProduct: (state) => {
+      if (!state.selectedGroupNameProduct) {
+        return state.products;
+      }
+      return state.products.filter(
+        (product) => product.group === state.selectedGroupNameProduct
+      );
+    },
   },
+
   actions: {
+    setSelectedGroup(group) {
+      this.selectedGroupName = group;
+    },
+    setSelectedGroupProduct(group) {
+      this.selectedGroupNameProduct = group;
+    },
+
     async fetchGroups() {
-      const response = await axios.get("http://localhost:5173/api/groups");
-      this.groups = response.data;
+      try {
+        const response = await axios.get("http://localhost:3000/api/groups");
+        this.groups = response.data;
+      } catch (error) {
+        console.error("Error fetching groups:", error);
+      }
     },
+
     async fetchProducts() {
-      const response = await axios.get("http://localhost:5173/api/products");
-      this.products = response.data;
+      try {
+        const response = await axios.get("http://localhost:3000/api/products");
+        this.products = response.data;
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
     },
+
     async fetchCategories() {
-      const response = await axios.get("http://localhost:5173/api/categories");
-      this.categories = response.data;
+      try {
+        const response = await axios.get(
+          "http://localhost:3000/api/categories"
+        );
+        this.categories = response.data;
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
     },
+
     async fetchPromotions() {
-      const response = await axios.get("http://localhost:5173/api/promotions");
-      this.promotions = response.data;
+      try {
+        const response = await axios.get(
+          "http://localhost:3000/api/promotions"
+        );
+        this.promotions = response.data;
+      } catch (error) {
+        console.error("Error fetching promotions:", error);
+      }
     },
   },
 });

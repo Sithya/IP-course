@@ -33,7 +33,11 @@ export default {
 .menu {
   display: flex;
   justify-content: space-between;
-  gap: 1.5rem;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #333;
 }
 .menu ul {
   list-style-type: none;
@@ -46,13 +50,13 @@ export default {
 .menu-item {
   font-size: 1rem;
   color: #333;
-  font-weight: 400;
+  font-weight: 500;
   cursor: pointer;
   transition: color 0.3s ease;
 }
 
 .menu-item:hover {
-  color: #000;
+  color: #4392f4;
 }
 
 .menu-item.active {
